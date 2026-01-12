@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MPU ERP | BCA Student Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --mpu-blue: #004aad;
+            --mpu-dark: #002350;
+            --success: #00e676;
+            --danger: #ff1744;
+            --warning: #ffb300;
+            --today-highlight: rgba(0, 74, 173, 0.2);
+            --holiday-bg: #f3e5f5;
+            --holiday-text: #7b1fa2;
+        }
+
+        * { box-sizing: border-box; font-family: 'Outfit', sans-serif; outline: none; }
+        body { margin: 0; background-color: #000; overflow-x: hidden; color: #333; }
+
+        /* Login Background: College Photo */
+        .bg-login {
+            background: linear-gradient(rgba(29, 31, 79, 0.5), rgba(0, 0, 0, 0.6)), 
+                        url('https://mindpoweruniversity.ac.in/wp-content/uploads/elementor/thumbs/mind-power-university-main-buliding-r3bj3j7p2wamj29qide6j0s024v9abp1sv729n0wy2.jpg');
+            background-size: cover !important; background-position: center !important; height: 100vh;
+        }
+
+        /* Generic background class for sections */
+        .dynamic-bg {
+            background-size: cover !important; background-attachment: fixed !important;
+            background-position: center !important; min-height: 100vh; transition: 0.5s ease-in-out;
+        }
+
+        header { background: var(--mpu-blue); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; color: white; box-shadow: 0 4px 15px rgba(0,0,0,0.3); position: sticky; top: 0; z-index: 100; }
+        .container { max-width: 98%; margin: 0 auto; padding: 20px 10px; }
+
+        .stats-grid { display: flex; gap: 10px; flex-wrap: wrap; }
+        .stat-card { 
+            background: rgba(255,255,255,0.95); padding: 8px 15px; border-radius: 12px; 
+            box-shadow: 0 8px 20px rgba(27, 103, 166, 0.4); border-top: 4px solid var(--mpu-blue);
+            min-width: 110px; text-align: center; backdrop-filter: blur(5px);
+        }
+        .stat-card h4 { margin: 0; font-size: 10px; color: #555; text-transform: uppercase; letter-spacing: 1px; }
+        .stat-card div { font-size: 18px; font-weight: 800; color: var(--mpu-dark); }
+
+        .table-frame { 
+            background: rgba(255, 255, 255, 0.9); border-radius: 15px; overflow: auto; 
+            max-height: 65vh; border: 1px solid #ddd; box-shadow: 0 15px 40px rgba(0,0,0,0.3); margin-top: 15px;
+        }
+        table { width: 100%; border-collapse: collapse; min-width: 1600px; }
+        th { background: #f8fafc; padding: 12px 5px; position: sticky; top: 0; z-index: 10; border: 1px solid #e2e8f0; font-size: 12px; }
+        td { padding: 10px 5px; border: 1px solid #edf2f7; text-align: center; font-size: 13px; font-weight: 500; }
+        
+        .sticky-col { position: sticky; left: 0; background: white !important; z-index: 20; text-align: left; padding-left: 15px; font-weight: 700; border-right: 3px solid var(--mpu-blue); }
+
+        .today-active { background-color: var(--today-highlight) !important; border: 2px solid var(--mpu-blue) !important; }
+        .sun-col { color: var(--danger) !important; background: #fff5f5; font-weight: 800; }
+        .holiday-cell { background: var(--holiday-bg) !important; color: var(--holiday-text) !important; font-size: 10px !important; font-weight: bold; }
+        .status-p { background: var(--success) !important; color: white !important; }
+        .status-a { background: var(--danger) !important; color: white !important; }
+
+        .btn { padding: 10px 20px; border-radius: 8px; border: none; font-weight: 700; cursor: pointer; transition: 0.3s; }
+        .btn-primary { background: var(--mpu-blue); color: white; }
+        .btn-back { background: rgba(215, 5, 5, 0.8); color: white; margin-bottom: 10px; }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+        .nav-card { 
+            background: rgba(255,255,255,0.9); padding: 35px 20px; border-radius: 20px; 
+            cursor: pointer; transition: 0.4s; text-align: center; border-bottom: 6px solid var(--mpu-blue);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        .nav-card:hover { transform: translateY(-8px); background: white; }
+
+        .hidden { display: none !important; }
+        h1, h2 { color: white; text-shadow: 2px 2px 8px rgba(0,0,0,0.8); text-align: center; }
+    </style>
+</head>
+<body class="bg-login">
+
+    <div id="loginPage" style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh;">
+        <h1 style="font-size: clamp(24px, 6vw, 42px); font-weight: 800; margin-bottom: 20px;">BCA STUDENT ERP PORTAL</h1>
+        <div style="background: rgb(6, 17, 46); padding: 40px; border-radius: 30px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.5);">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2Amtd-X9edNHH7bueZvPZ0UiergvHpTC9eQ&s" style="width: 110px; margin-bottom: 25px;">
+            <input type="text" id="username" placeholder="Username / Student Name" style="width: 100%; padding:15px; margin-bottom: 15px; border-radius:10px; border:1.5px solid #ddd; font-size: 16px;">
+            <input type="password" id="password" placeholder="Password" style="width: 100%; padding:15px; margin-bottom: 25px; border-radius:10px; border:1.5px solid #ddd; font-size: 16px;">
+            <button class="btn btn-primary" style="width: 100%; font-size: 16px;" onclick="handleLogin()">Sign In</button>
+            <div style="margin-top: 20px; font-size: 11px; color: #999;">Mind Power University &copy; 2026</div>
+        </div>
+    </div>
+
+    <div id="app" class="hidden">
+        <header>
+            <div style="font-weight:800; font-size: 18px;">MIND POWER UNIVERSITY</div>
+            <div style="display:flex; align-items:center; gap:15px;">
+                <span id="userTag" style="font-weight: 600; background: rgba(255,255,255,0.2); padding: 5px 15px; border-radius: 20px;"></span>
+                <button class="btn" style="background:#ff4757; color:white; padding:6px 15px;" onclick="location.reload()">Logout</button>
+            </div>
+        </header>
+
+        <div id="viewSemesters" class="hidden dynamic-bg" style="background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url('https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=1200&auto=format&fit=crop&q=80')">
+            <div class="container">
+                <h2 style="margin-bottom:40px;">Select Academic Semester</h2>
+                <div class="grid" id="semGrid"></div>
+            </div>
+        </div>
+
+        <div id="viewMonths" class="hidden dynamic-bg">
+            <div class="container">
+                <button class="btn btn-back" onclick="navTo('viewSemesters')">← Semesters</button>
+                <h2 id="semTitle"></h2>
+                <div class="grid" id="monthGrid"></div>
+            </div>
+        </div>
+
+        <div id="viewAttendance" class="hidden dynamic-bg">
+            <div class="container">
+                <div style="display:flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.6); padding: 15px; border-radius: 15px; backdrop-filter: blur(10px); flex-wrap: wrap; gap: 10px;">
+                    <button class="btn btn-back" onclick="navTo('viewMonths')" style="margin:0;">← Months</button>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card"><h4>Strength</h4><div>46</div></div>
+                        <div class="stat-card"><h4>Live P</h4><div id="statPresent" style="color:var(--success)">0</div></div>
+                        <div class="stat-card" style="border-top-color: var(--warning);">
+                            <h4 id="percLabel">Sem %</h4>
+                            <div id="statPerc" style="color:var(--mpu-blue) !important;">0%</div>
+                        </div>
+                    </div>
+
+                    <div style="display:flex; gap:10px;">
+                        <input type="text" id="searchInput" placeholder="Search..." style="padding:10px; border-radius:8px; border:none; width: 130px;">
+                        <button id="saveBtn" class="btn btn-primary hidden" onclick="saveData()">Save 💾</button>
+                    </div>
+                </div>
+
+                <div class="table-frame">
+                    <table>
+                        <thead><tr id="tHead"></tr></thead>
+                        <tbody id="tBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const DB_KEY = 'MPU_BCA_DATA_FINAL_SECURED';
+        const HOLIDAYS = { "0_26": "REP. DAY", "2_25": "HOLI", "7_15": "IND. DAY", "9_2": "GANDHI J.", "9_20": "DIWALI", "11_25": "X-MAS" };
+        const STUDENTS = ["Aashna singh","Adanan","Aditya Gautam","Ahshan","Aksha khan","Arjun singh","Arman","Avantika shilpi","Bhawana bisht","Bhumika belwal","Chandresh Joshi","Dipika bisht","Divyanshu Bhatt","Diya Pandey","Gaurav Joshi","Gaurav Kumar","Gitanjali Pandey","Harman Kaur","Himanshu nayal","Hrshit mehara","Jatin palariya","Jeet Rana","Karan naugai","Khushi Kaur","Kunal","Lokesh Kumar","Manmohan palariya","Minhal raza","Namit palariya","Neeraj Bora","Neha bughani","Pawan Kumar tamta","Prachi Mehra","Prajwal Singh mahara","Preetam Singh Bohra","Pyush Adhikari","Sanjay Bohra","Saransh Kushwaha","Saurabh nayal","Shivani diwakar","Shubham singh","Sumit kumar","Vaibhav kapil","Vansh Gupta","Vidya Saxena","Wasiq Ali"];
+        const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        
+        const SEMESTERS = [
+            { id: 1, name: "Semester 1", course: "BCA 1st Year", year: 2025, m: [6,7,8,9,10,11] },
+            { id: 2, name: "Semester 2", course: "BCA 1st Year", year: 2026, m: [0,1,2,3,4,5] },
+            { id: 3, name: "Semester 3", course: "BCA 2nd Year", year: 2026, m: [6,7,8,9,10,11] },
+            { id: 4, name: "Semester 4", course: "BCA 2nd Year", year: 2027, m: [0,1,2,3,4,5] },
+            { id: 5, name: "Semester 5", course: "BCA 3rd Year", year: 2027, m: [6,7,8,9,10,11] },
+            { id: 6, name: "Semester 6", course: "BCA 3rd Year", year: 2028, m: [0,1,2,3,4,5] }
+        ];
+
+        let state = { user: null, role: null, sem: null, month: null, data: JSON.parse(localStorage.getItem(DB_KEY) || '{}') };
+
+        function handleLogin() {
+            const u = document.getElementById('username').value.trim();
+            const p = document.getElementById('password').value.trim();
+            if(p === "Admin@2026") { state.role = 'admin'; state.user = u.toUpperCase() || "ADMIN"; showApp(); }
+            else if(p === "Student@2026") {
+                const f = STUDENTS.find(s => s.toLowerCase() === u.toLowerCase());
+                if(f) { state.role = 'student'; state.user = f.toUpperCase(); showApp(); }
+                else alert("Student name not found!");
+            } else alert("Invalid Password!");
+        }
+
+        function showApp() {
+            document.body.classList.remove('bg-login');
+            document.getElementById('loginPage').classList.add('hidden');
+            document.getElementById('app').classList.remove('hidden');
+            document.getElementById('userTag').innerText = state.user;
+            renderSems();
+            navTo('viewSemesters');
+        }
+
+        function navTo(id) {
+            ['viewSemesters', 'viewMonths', 'viewAttendance'].forEach(v => document.getElementById(v).classList.add('hidden'));
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        function renderSems() {
+            document.getElementById('semGrid').innerHTML = SEMESTERS.map(s => `
+                <div class="nav-card" onclick="openSem(${s.id})">
+                    <div style="font-weight: 800; color: var(--mpu-blue); font-size: 14px;">${s.course} (${s.year})</div>
+                    <h3 style="margin: 10px 0 0 0; font-size: 24px;">${s.name}</h3>
+                </div>
+            `).join('');
+        }
+
+        function openSem(id) {
+            state.sem = SEMESTERS.find(s => s.id === id);
+            document.getElementById('semTitle').innerText = `${state.sem.name} (${state.sem.year})`;
+            document.getElementById('monthGrid').innerHTML = state.sem.m.map(m => `
+                <div class="nav-card" onclick="openMonth(${m})"><h3>${MONTHS[m]}</h3></div>
+            `).join('');
+            setWeatherBG(state.sem.m[0]); // Set default month background
+            navTo('viewMonths');
+        }
+
+        function openMonth(m) {
+            state.month = m;
+            setWeatherBG(m);
+            state.role === 'admin' ? document.getElementById('saveBtn').classList.remove('hidden') : document.getElementById('saveBtn').classList.add('hidden');
+            renderTable();
+            navTo('viewAttendance');
+        }
+
+        function setWeatherBG(mIdx) {
+            let img = "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&q=80&w=1920"; // Default
+            if ([10, 11, 0, 1].includes(mIdx)) img = "https://images.unsplash.com/photo-1477346611705-65d1883cee1e?auto=format&fit=crop&q=80&w=1920"; // Winter
+            else if ([2, 3, 4, 5].includes(mIdx)) img = "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=1920"; // Summer
+            else if ([6, 7, 8, 9].includes(mIdx)) img = "https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?auto=format&fit=crop&q=80&w=1920"; // Monsoon/Spring
+            
+            const bgStyle = `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.7)), url('${img}')`;
+            document.getElementById('viewMonths').style.background = bgStyle;
+            document.getElementById('viewAttendance').style.background = bgStyle;
+        }
+
+        function renderTable() {
+            const daysInMonth = new Date(state.sem.year, state.month + 1, 0).getDate();
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const now = new Date();
+            const isTodayMonth = (now.getMonth() === state.month && now.getFullYear() === state.sem.year);
+            const todayDate = now.getDate();
+
+            let h = `<th class="sticky-col">BCA Student Name</th>`;
+            for(let d=1; d<=daysInMonth; d++) {
+                const dateObj = new Date(state.sem.year, state.month, d);
+                const dayStr = ["SUN","MON","TUE","WED","THU","FRI","SAT"][dateObj.getDay()];
+                const holiday = HOLIDAYS[`${state.month}_${d}`];
+                const isSun = (dateObj.getDay() === 0);
+                h += `<th class="${isTodayMonth && d === todayDate ? 'today-active ' : ''}${isSun ? 'sun-col ' : ''}">${d}<br><small>${holiday || dayStr}</small></th>`;
+            }
+            document.getElementById('tHead').innerHTML = h;
+
+            let b = '', liveP = 0;
+            STUDENTS.forEach(s => {
+                if((state.role === 'student' && s.toUpperCase() !== state.user) || (search && !s.toLowerCase().includes(search))) return;
+                b += `<tr><td class="sticky-col">${s}</td>`;
+                for(let d=1; d<=daysInMonth; d++) {
+                    const dateObj = new Date(state.sem.year, state.month, d);
+                    const isSun = (dateObj.getDay() === 0);
+                    const holiday = HOLIDAYS[`${state.month}_${d}`];
+                    const key = `${state.sem.id}_${state.month}_${s}_${d}`;
+                    const val = state.data[key] || '';
+                    if(isTodayMonth && d === todayDate && val === 'P') liveP++;
+                    let cellClass = (isTodayMonth && d === todayDate) ? 'today-active ' : '';
+                    let content = val, action = (state.role === 'admin') ? `onclick="toggle('${s}',${d})"` : '';
+                    if(holiday) { cellClass += 'holiday-cell'; content = holiday; action = ''; }
+                    else if(isSun) { cellClass += 'sun-col'; content = 'SUN'; action = ''; }
+                    else { if(val === 'P') cellClass += 'status-p'; if(val === 'A') cellClass += 'status-a'; }
+                    b += `<td ${action} class="${cellClass}">${content}</td>`;
+                }
+                b += `</tr>`;
+            });
+            document.getElementById('tBody').innerHTML = b;
+            document.getElementById('statPresent').innerText = liveP;
+            
+            // Percentage Logic
+            let totalPossible = 0, totalPresent = 0;
+            STUDENTS.forEach(s => {
+                if((state.role === 'student' && s.toUpperCase() !== state.user) || (search && !s.toLowerCase().includes(search))) return;
+                state.sem.m.forEach(mIdx => {
+                    const days = new Date(state.sem.year, mIdx + 1, 0).getDate();
+                    for(let d=1; d<=days; d++) {
+                        const dateObj = new Date(state.sem.year, mIdx, d);
+                        if(dateObj.getDay() !== 0 && !HOLIDAYS[`${mIdx}_${d}`]) {
+                            totalPossible++;
+                            if(state.data[`${state.sem.id}_${mIdx}_${s}_${d}`] === 'P') totalPresent++;
+                        }
+                    }
+                });
+            });
+            document.getElementById('statPerc').innerText = totalPossible === 0 ? "0%" : ((totalPresent / totalPossible) * 100).toFixed(1) + "%";
+        }
+
+        function toggle(s, d) {
+            const key = `${state.sem.id}_${state.month}_${s}_${d}`;
+            state.data[key] = !state.data[key] ? 'P' : (state.data[key] === 'P' ? 'A' : '');
+            renderTable();
+        }
+
+        function saveData() { localStorage.setItem(DB_KEY, JSON.stringify(state.data)); alert("Attendance Data Saved! ✅"); }
+        document.getElementById('searchInput').oninput = renderTable;
+    </script>
+</body>
+</html>
